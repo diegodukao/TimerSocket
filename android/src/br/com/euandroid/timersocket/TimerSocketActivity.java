@@ -33,7 +33,8 @@ public class TimerSocketActivity extends Activity {
 
         // add a click listener to the button
         mPickTime.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            @Override
+			public void onClick(View v) {
                 showDialog(TIME_DIALOG_ID);
             }
         });
@@ -66,7 +67,8 @@ public class TimerSocketActivity extends Activity {
  // the callback received when the user "sets" the time in the dialog
     private TimePickerDialog.OnTimeSetListener mTimeSetListener =
         new TimePickerDialog.OnTimeSetListener() {
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            @Override
+			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 mHour = hourOfDay;
                 mMinute = minute;
                 updateDisplay();
