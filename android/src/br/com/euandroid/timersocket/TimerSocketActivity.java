@@ -1,6 +1,9 @@
 package br.com.euandroid.timersocket;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -49,7 +52,12 @@ public class TimerSocketActivity extends Activity {
         mSendTime.setOnClickListener(new View.OnClickListener() {
         	@Override
         	public void onClick(View v){
-        		sendTimeToEletricSocket();
+        		try {
+					sendTimeToEletricSocket();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
         	}
         });
 
@@ -63,7 +71,15 @@ public class TimerSocketActivity extends Activity {
 
     }
     
-    public void sendTimeToEletricSocket(){
+    public void sendTimeToEletricSocket() throws ParseException{
+    	Date now = new Date();
+    	
+    	Date data = new Date();
+    	data.setHours(mHour);
+    	data.setMinutes(mMinute);
+    	
+    	long interval = data.getTime() - now.getTime();
+    	
     	try {
 			electricSocketHttpClient.executeHttpGet();
 		} catch (Exception e) {
