@@ -1,7 +1,5 @@
 package br.com.euandroid.timersocket;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -53,12 +51,7 @@ public class TimerSocketActivity extends Activity {
         mSendTime.setOnClickListener(new View.OnClickListener() {
         	@Override
         	public void onClick(View v){
-        		try {
-					sendTimeToEletricSocket();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				sendTimeToEletricSocket();
         	}
         });
 
@@ -72,7 +65,7 @@ public class TimerSocketActivity extends Activity {
 
     }
     
-    public void sendTimeToEletricSocket() throws ParseException{
+    public void sendTimeToEletricSocket(){
     	Date now = new Date();
     	
     	Date newDate = new Date();
