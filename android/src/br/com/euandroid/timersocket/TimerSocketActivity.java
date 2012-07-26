@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import br.com.euandroid.timersocket.ElectricSocketHttpClient;
 
 public class TimerSocketActivity extends Activity {
     /** Called when the activity is first created. */
@@ -19,8 +20,12 @@ public class TimerSocketActivity extends Activity {
 
     private int mHour;
     private int mMinute;
+    
+    private Button mSendTime;
 
     static final int TIME_DIALOG_ID = 0;
+    
+    private ElectricSocketHttpClient electricSocketHttpClient = new ElectricSocketHttpClient();
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,7 @@ public class TimerSocketActivity extends Activity {
      // capture our View elements
         mTimeDisplay = (TextView) findViewById(R.id.timeDisplay);
         mPickTime = (Button) findViewById(R.id.pickTime);
+        mSendTime = (Button) findViewById(R.id.sendTime);
 
         // add a click listener to the button
         mPickTime.setOnClickListener(new View.OnClickListener() {
@@ -37,6 +43,14 @@ public class TimerSocketActivity extends Activity {
 			public void onClick(View v) {
                 showDialog(TIME_DIALOG_ID);
             }
+        });
+        
+        // add a click listener to the button
+        mSendTime.setOnClickListener(new View.OnClickListener() {
+        	@Override
+        	public void onClick(View v){
+        		sendTimeToEletricSocket();
+        	}
         });
 
         // get the current time
@@ -47,6 +61,15 @@ public class TimerSocketActivity extends Activity {
         // display the current date
         updateDisplay();
 
+    }
+    
+    public void sendTimeToEletricSocket(){
+    	try {
+			electricSocketHttpClient.executeHttpGet();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
  // updates the time we display in the TextView
