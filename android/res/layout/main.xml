@@ -3,18 +3,33 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-    
-    <TextView android:id="@+id/timeDisplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""/>
-    <Button android:id="@+id/pickTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change the time"/>
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:text="@string/endereco" />
+    <EditText android:id="@+id/network_address" android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:text="192.168.42.100"
+        android:textSize="18sp" />
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:text="@string/set_time" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="fill_parent"
+	    android:layout_height="100dp"
+	    android:orientation="horizontal" >
+	    <TextView android:id="@+id/timeDisplay"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:height="100dp"
+	        android:width="200dp"
+	        android:textSize="70dp"
+	        android:text=""/>
+	    <Button android:id="@+id/pickTime"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/change_time"/>
+	</LinearLayout>
+	
     <Button android:id="@+id/sendTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send the new time"/>
+        android:text="@string/send_time"/>
 
 </LinearLayout>

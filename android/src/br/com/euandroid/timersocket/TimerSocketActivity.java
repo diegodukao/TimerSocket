@@ -11,6 +11,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import br.com.euandroid.timersocket.ElectricSocketHttpClient;
@@ -74,14 +75,27 @@ public class TimerSocketActivity extends Activity {
     public void sendTimeToEletricSocket() throws ParseException{
     	Date now = new Date();
     	
-    	Date data = new Date();
-    	data.setHours(mHour);
-    	data.setMinutes(mMinute);
+    	Date newDate = new Date();
+    	newDate.setHours(mHour);
+    	newDate.setMinutes(mMinute);
     	
-    	long interval = data.getTime() - now.getTime();
+    	if (now.after(newDate)) {
+    		Calendar cal = Calendar.getInstance();
+    		cal.setTime(newDate);
+    		cal.add(Calendar.DATE, 1);
+    		
+    		newDate = cal.getTime();
+    	}
+    	
+    	long interval = (newDate.getTime() - now.getTime()) / 1000;
+    	
+    	EditText addressField = (EditText) findViewById(R.id.network_address);
+    	String address = addressField.toString();
+    	
+    	String url = "http://" + address + "/electric-socket?action=on&timestamp=" + interval;
     	
     	try {
-			electricSocketHttpClient.executeHttpGet();
+			electricSocketHttpClient.executeHttpGet(url);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
