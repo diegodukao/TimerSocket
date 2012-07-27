@@ -10,7 +10,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 public class ElectricSocketHttpClient {
-	public void executeHttpGet(String url) throws Exception {
+	public String executeHttpGet(String url) throws Exception {
         BufferedReader in = null;
         try {
             HttpClient client = new DefaultHttpClient();
@@ -28,6 +28,7 @@ public class ElectricSocketHttpClient {
             in.close();
             String page = sb.toString();
             System.out.println(page);
+            return page;
             } finally {
             if (in != null) {
                 try {

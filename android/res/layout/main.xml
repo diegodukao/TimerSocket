@@ -8,6 +8,27 @@
     <EditText android:id="@+id/network_address" android:layout_width="fill_parent"
         android:layout_height="wrap_content" android:text="192.168.42.100"
         android:textSize="18sp" />
+    
+    <TextView android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:text="@string/current_status" />
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal" >
+	    <TextView android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:height="80dp"
+            android:width="200dp"
+            android:textSize="50dp"
+            android:text="ON"/>
+        <Button android:id="@+id/toggleSocket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/toggle_socket"/>
+	</LinearLayout>
+    
     <TextView android:layout_width="fill_parent"
         android:layout_height="wrap_content" android:text="@string/set_time" />
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

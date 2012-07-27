@@ -19,6 +19,10 @@ public class TimerSocketActivity extends Activity {
 	
 	private TextView mTimeDisplay;
     private Button mPickTime;
+    private Button mToggleSocket;
+    private TextView mStatus;
+    
+    private String status;
 
     private int mHour;
     private int mMinute;
@@ -35,9 +39,13 @@ public class TimerSocketActivity extends Activity {
         setContentView(R.layout.main);
         
      // capture our View elements
+        mStatus = (TextView) findViewById(R.id.status);
         mTimeDisplay = (TextView) findViewById(R.id.timeDisplay);
         mPickTime = (Button) findViewById(R.id.pickTime);
         mSendTime = (Button) findViewById(R.id.sendTime);
+        mToggleSocket = (Button) findViewById(R.id.toggleSocket);
+        
+        updateStatus();
 
         // add a click listener to the button
         mPickTime.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +62,34 @@ public class TimerSocketActivity extends Activity {
 				sendTimeToEletricSocket();
         	}
         });
+        
+        // add a click listener to the button
+        mToggleSocket.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				EditText addressField = (EditText) findViewById(R.id.network_address);
+		    	String address = addressField.getText().toString();
+		    	String toggleValue;
+		    	if (status.charAt(1) == 'N') { //ON
+		    		toggleValue = "off";
+		    	}
+		    	else {
+		    		toggleValue = "on";
+		    	}
+		    	
+		    	String url = "http://" + address + "/electric-socket?action="  + toggleValue + "&timestamp=1";
+		    	try {
+					String result = electricSocketHttpClient.executeHttpGet(url);
+					
+					status = toggleValue.toUpperCase();
+					mStatus.setText(status);
+
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 
         // get the current time
         final Calendar c = Calendar.getInstance();
@@ -64,6 +100,25 @@ public class TimerSocketActivity extends Activity {
         updateDisplay();
 
     }
+    
+    public void updateStatus() {
+    	EditText addressField = (EditText) findViewById(R.id.network_address);
+    	String address = addressField.getText().toString();
+    	
+    	String url = "http://" + address + "/electric-socket?action=status";
+    	try {
+			String result = electricSocketHttpClient.executeHttpGet(url);
+			
+			status = result;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			status = "error";
+		}
+
+        mStatus.setText(status);
+    	
+    };
     
     public void sendTimeToEletricSocket(){
     	Date now = new Date();
@@ -83,12 +138,20 @@ public class TimerSocketActivity extends Activity {
     	long interval = (newDate.getTime() - now.getTime()) / 1000;
     	
     	EditText addressField = (EditText) findViewById(R.id.network_address);
-    	String address = addressField.toString();
+    	String address = addressField.getText().toString();
     	
-    	String url = "http://" + address + "/electric-socket?action=on&timestamp=" + interval;
+    	String toggleValue;
+    	if (status.charAt(1) == 'N') { //ON
+    		toggleValue = "off";
+    	}
+    	else {
+    		toggleValue = "on";
+    	}
+    	
+    	String url = "http://" + address + "/electric-socket?action=" + toggleValue + "&timestamp=" + interval;
     	
     	try {
-			electricSocketHttpClient.executeHttpGet(url);
+			String result = electricSocketHttpClient.executeHttpGet(url);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

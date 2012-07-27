@@ -4,6 +4,8 @@
     <string name="hello">Hello World, TimerSocketActivity!</string>
     <string name="app_name">TimerSocket</string>
     <string name="endereco">Insert the network address</string>
+    <string name="current_status">Current status:</string>
+    <string name="toggle_socket">Toggle</string>
     <string name="change_time">Change</string>
     <string name="set_time">Time to wake up:</string>
     <string name="send_time">Send to the electric socket</string>
